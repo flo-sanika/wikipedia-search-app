@@ -28,3 +28,34 @@ header {
             }
       }
 }
+
+body {
+      #container {
+            display: grid;
+            grid-template-columns: 20% 1fr 1fr 20%;
+
+            .queryResult {
+                  grid-column: 2 / 4;
+
+                  .title {
+                        color: #1f1ff5;
+                        margin-bottom: 5px;
+                  }
+
+
+                  .lien {
+                        color: #228b22;
+                        &:visited {
+                              color: #228b22;
+                        }
+                  }
+
+
+                  .resume {
+                        color: #000000;
+                        
+                  }
+            }
+
+      }
+}

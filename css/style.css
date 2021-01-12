@@ -24,4 +24,25 @@ header form input {
   border-color: #2196f3;
 }
 
+body #container {
+  display: grid;
+  grid-template-columns: 20% 1fr 1fr 20%;
+}
+body #container .queryResult {
+  grid-column: 2/4;
+}
+body #container .queryResult .title {
+  color: #1f1ff5;
+  margin-bottom: 5px;
+}
+body #container .queryResult .lien {
+  color: #228b22;
+}
+body #container .queryResult .lien:visited {
+  color: #228b22;
+}
+body #container .queryResult .resume {
+  color: #000000;
+}
+
 /*# sourceMappingURL=style.css.map */

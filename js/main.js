@@ -17,6 +17,8 @@ async function search(event) {
             alert("problem in catch line 18");
       }
       console.log(results);
+
+      affichageResultat(results);
 }
 
 async function searchWikipedia(searchQuery) {
@@ -29,9 +31,45 @@ async function searchWikipedia(searchQuery) {
       return result;
 }
 
-      
+// le titre de la div sera query.search.title en bleu souligner
+// le titre est un lien vers https://en.wikipedia.org/?curid=query.search.pageid
+// en dessous viens l'adresse vers le lien en vert
+// en dessous viens le snippet de la page
 function affichageResultat(resultat) {
+      
+      let main = document.getElementById("container");
+      
+      
+      for (const searchResult in resultat.query.search) {
+            if (Object.hasOwnProperty.call(resultat.query.search, searchResult)) {
+                  let div = document.createElement('div');
+                  let title = document.createElement('h3');
+                  let lien = document.createElement('a');
+                  let texte = document.createElement('p');
 
+                  const result = resultat.query.search[searchResult];
+                  
+                  
+                  // definition des classes :
+                  div.className="queryResult";
+                  title.className='title';
+                  lien.className="lien";
+                  texte.className="resume";
+
+                  const link = `https://en.wikipedia.org/?curid=${result.pageid}`;
+                  lien.innerHTML = link;
+                  lien.href = link;
+                  title.innerHTML = `<a href=${link}>${result.title}</a>`;
+              
+                  texte.innerHTML = result.snippet;
+                  
+                  div.append(title);
+                  div.append(lien);
+                  div.append(texte);
+                  main.append(div);
+            }
+      }
+      // les liens :
 }
       
       
