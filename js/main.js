@@ -1,13 +1,21 @@
 const formulaire = document.getElementById("submit-form");
-console.log(typeof(formulaire));
+// console.log(typeof(formulaire));
 
 formulaire.addEventListener('submit', search);
 
 async function search(event) {
       // prevent page from reloading when form is submitted
       event.preventDefault();
+      // if the page has something in it, remove it :
+      if (document.querySelectorAll('.queryResult')) {
+            document.querySelectorAll('.queryResult').forEach(elem => elem.remove());
+      }
+      let spinner = document.querySelector(".spinner");
+      spinner.classList.remove('hide');
       // get the value of the input field
-      let searchQuery = event.currentTarget.elements[0].value.trim();
+      let searchQuery = event.currentTarget.elements[0].value;
+      searchQuery = searchQuery.trim();
+      // console.log(searchQuery);
       let results = "";
       try {
             results = await searchWikipedia(searchQuery);
@@ -17,12 +25,13 @@ async function search(event) {
             alert("problem in catch line 18");
       }
       console.log(results);
-
+      spinner.classList.add('hide');
       affichageResultat(results);
 }
 
 async function searchWikipedia(searchQuery) {
-      const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`;
+      console.log(searchQuery);
+      let endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`;
       let result = await fetch(endpoint)
             .then(response=> response.json())
             .catch(error => console.log(error));
@@ -55,12 +64,14 @@ function affichageResultat(resultat) {
                   title.className='title';
                   lien.className="lien";
                   texte.className="resume";
-
+                  
+                  // les liens :
                   const link = `https://en.wikipedia.org/?curid=${result.pageid}`;
                   lien.innerHTML = link;
                   lien.href = link;
                   title.innerHTML = `<a href=${link}>${result.title}</a>`;
-              
+                  
+                  // aperçu : 
                   texte.innerHTML = result.snippet;
                   
                   div.append(title);
@@ -69,7 +80,6 @@ function affichageResultat(resultat) {
                   main.append(div);
             }
       }
-      // les liens :
 }
       
       
